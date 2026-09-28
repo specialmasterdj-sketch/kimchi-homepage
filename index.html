@@ -13,7 +13,7 @@
 <link rel="icon" href="./img/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"GroceryStore","name":"Kimchi Mart","url":"https://www.miamikimchi.com/","email":"info@miamikimchi.com","image":"https://www.miamikimchi.com/img/hero.jpg","priceRange":"$$","openingHours":"Mo-Su 08:00-22:00","department":[
 {"@type":"GroceryStore","name":"Kimchi Mart Miami","telephone":"+1-305-964-5083","address":{"@type":"PostalAddress","streetAddress":"15355 S Dixie Hwy","addressLocality":"Miami","addressRegion":"FL","postalCode":"33157"}},
@@ -23,6 +23,8 @@
 {"@type":"GroceryStore","name":"Kimchi Mart Fort Lauderdale","telephone":"+1-754-216-0106","address":{"@type":"PostalAddress","streetAddress":"510 NW 7th Ave","addressLocality":"Fort Lauderdale","addressRegion":"FL","postalCode":"33311"}}]}
 </script>
 <link rel="stylesheet" href="./assets/site.css">
+<link rel="stylesheet" href="./assets/home.css">
+<link rel="preload" as="image" href="./img/food/gimbap.jpg">
 </head>
 <body>
 
@@ -33,13 +35,13 @@
       <b>KIMCHI MART<span>SAFE · CLEAN · TRUSTED</span></b>
     </a>
     <nav class="menu" id="menu">
-      <a href="#locations">Locations</a>
+      <a href="#prepared">Today's Banchan</a>
       <a href="#sale">Weekly Sale</a>
+      <a href="#pickup">1-Hour Pickup</a>
+      <a href="#locations">Locations</a>
       <a href="#membership">Membership</a>
-      <a href="#prepared">Prepared Food</a>
       <a href="#about">About</a>
       <a href="#blog">Blog</a>
-      <a href="#careers">Careers</a>
     </nav>
     <a class="shopbtn" href="https://kimchimartshop.com" target="_blank" rel="noopener">🛒 Shop Online</a>
     <button class="burger" onclick="document.getElementById('menu').classList.toggle('open')" aria-label="Menu">☰</button>
@@ -47,23 +49,101 @@
 </header>
 
 <section class="hero" id="top">
-  <img src="./img/hero.jpg" alt="Kimchi Mart storefront">
+  <div class="media" id="heroMedia" aria-hidden="true"></div>
   <div class="wrap">
-    <h1>Safe, Clean, Trusted Asian Food</h1>
-    <p>South Florida's Asian food market with the best prices. Fresh produce, Korean groceries, ready-to-eat meals — six neighborhood stores, open every single day.</p>
+    <span class="kicker" id="heroOpen"><i class="dot"></i><span>Open every day · 8AM – 10PM</span></span>
+    <h1>Made fresh <em>this morning.</em> Priced for every day.</h1>
+    <p>Banchan, kimbap and sushi made in-store daily, meat and seafood cut to order, and the lowest prices on Asian produce in Florida — at six South Florida stores.</p>
     <div class="cta">
       <a class="btn btn-w" href="#locations">📍 Find a Store</a>
-      <a class="btn btn-o" href="https://kimchimartshop.com" target="_blank" rel="noopener">🛒 Shop Online — Pickup in 1 Hour</a>
+      <a class="btn btn-o" href="#pickup">🛒 Order Online — Pickup in 1 Hour</a>
     </div>
   </div>
+  <span class="dish" id="heroDish"></span>
 </section>
+
+<div class="ticker" aria-label="Today only deals">
+  <span class="lbl">🔥 TODAY ONLY</span>
+  <div class="track" id="tickerTrack"></div>
+</div>
 
 <div class="strip">
   <div class="wrap">
     <div><b>8AM – 10PM</b><span>Open every day, 365 days</span></div>
     <div><b>6 Locations</b><span>Miami to West Palm Beach</span></div>
     <div><b>EBT / SNAP</b><span>Accepted at all stores</span></div>
-    <div><b>5% & 10% Off</b><span>K1 &amp; K2 membership</span></div>
+    <div><b>5% &amp; 10% Off</b><span>K1 &amp; K2 membership</span></div>
+  </div>
+</div>
+
+<section class="kitchen" id="kitchen">
+  <div class="wrap">
+    <div class="khead">
+      <div>
+        <p class="keb">From our kitchen</p>
+        <h2>Ready when you are.</h2>
+      </div>
+      <p>Freshly prepared favorites make lunch, dinner and sharing around the table feel effortless.</p>
+    </div>
+    <div class="krow">
+      <a class="kcard" href="#prepared"><img src="./img/food/bibimbap.jpg" alt="Bibimbap bowl" loading="lazy"><div><h3>Hot meals</h3><p>Comforting favorites, ready to enjoy</p></div></a>
+      <a class="kcard" href="#prepared"><img src="./img/food/gimbap.jpg" alt="Kimbap rolls" loading="lazy"><div><h3>Kimbap &amp; rolls</h3><p>Made for lunch, picnics or a quick bite</p></div></a>
+      <a class="kcard" href="#prepared"><img src="./img/food/japchae.jpg" alt="Japchae and banchan" loading="lazy"><div><h3>Banchan</h3><p>A colorful table, without all the prep</p></div></a>
+    </div>
+  </div>
+</section>
+<section class="sect" id="prepared">
+  <div class="wrap">
+    <div class="shead">
+      <div>
+        <p class="eyebrow">Today's Banchan · <span id="todayDate"></span></p>
+        <h2>What's fresh at your store today</h2>
+        <p class="lead">Korean side dishes, kimbap, sushi and hot meals made in our kitchens every morning. Pick your store to see today's lineup.</p>
+      </div>
+      <a class="more" href="https://www.instagram.com/kimchimartmiami" target="_blank" rel="noopener">📷 More on Instagram →</a>
+    </div>
+    <div class="tabs" id="storeTabs" role="tablist" aria-label="Choose a store"></div>
+    <div class="today" id="todayGrid"></div>
+    <div class="today-foot">
+      <div class="chips">
+        <span class="chip">🍙 Kimbap</span><span class="chip">🥬 Banchan</span><span class="chip">🍣 Sushi &amp; rolls</span><span class="chip">🍱 Bento</span><span class="chip">🧋 Boba</span>
+      </div>
+      <span>Selection varies by store and sells out fast — come early!</span>
+    </div>
+  </div>
+</section>
+
+<section class="sect" id="sale">
+  <div class="wrap">
+    <div class="shead salehead">
+      <div>
+        <p class="eyebrow" style="color:var(--red)">This Week's Sale</p>
+        <h2>Up to 50% off — 240+ items</h2>
+        <p class="lead">New specials every Monday. Here are this week's favorites — the full ad is in our online store.</p>
+      </div>
+      <div class="count" id="saleCount"></div>
+    </div>
+    <div class="pgrid" id="saleGrid"></div>
+    <div style="text-align:center;margin-top:28px"><a class="btn btn-g" href="https://kimchimartshop.com" target="_blank" rel="noopener">See all 240+ sale items →</a></div>
+  </div>
+</section>
+
+<div class="band pickup" id="pickup">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--gold)">Order Online · Pickup in 1 Hour</p>
+    <h2>Skip the aisles. Grab it and go.</h2>
+    <p>Shop from your couch, we'll shop the store for you. Usually ready within an hour.</p>
+    <div class="steps">
+      <div class="step rv"><span class="n">1</span><span class="ic">📱</span><h3>Fill your cart</h3><p>Browse weekly specials and our full catalog on kimchimartshop.com. EBT / SNAP accepted.</p><span class="t">~5 minutes</span></div>
+      <div class="step rv"><span class="n">2</span><span class="ic">🧺</span><h3>We pick it fresh</h3><p>Our team hand-picks your produce, meat and seafood and packs your order.</p><span class="t">Within ~1 hour</span></div>
+      <div class="step rv"><span class="n">3</span><span class="ic">🚗</span><h3>Pick up at your store</h3><p>Come to the pickup counter at the store you chose. Bags packed and waiting.</p><span class="t">In &amp; out in 2 min</span></div>
+    </div>
+    <div class="timeline"><span>Order placed</span><span class="bar"><i></i></span><span>Ready for pickup · ~60 min</span></div>
+    <div class="perks" style="grid-template-columns:1fr 1fr;margin-top:28px">
+      <div class="perk"><i>🎁</i><div><b>$20 off your first two orders</b> — $10 each for new members.</div></div>
+      <div class="perk"><i>🍽️</i><div><b>Restaurant plan</b> — 10% off plus free delivery on $200+ orders.</div></div>
+    </div>
+    <div class="pickup-cta"><a class="btn btn-w" href="https://kimchimartshop.com" target="_blank" rel="noopener">Start my pickup order →</a></div>
   </div>
 </div>
 
@@ -72,99 +152,18 @@
     <p class="eyebrow">Our Locations</p>
     <h2>A neighborhood market near you</h2>
     <p class="lead">Every store carries fresh Asian produce, meat and seafood cut in-house, Korean groceries, snacks and ready-to-eat meals.</p>
+    <div class="trust" id="trustBar"></div>
 
-    <div class="cards">
-      <div class="store">
-        <a class="city citylink" href="./miamikimchimarket">Miami →</a>
-        <div class="addr">15355 S Dixie Hwy<br>Miami, FL 33157<br><small>Palmetto Bay</small></div>
-        <a class="tel" href="tel:+13059645083">(305) 964-5083</a>
-        <div class="acts">
-          <a class="a-map" href="https://www.google.com/maps/search/?api=1&query=15355+S+Dixie+Hwy+Miami+FL+33157" target="_blank" rel="noopener">Directions</a>
-          <a class="a-call" href="tel:+13059645083">Call</a>
-        </div>
-      </div>
-      <div class="store">
-        <a class="city citylink" href="./pembroke-pine-fl-sales">Pembroke Pines →</a>
-        <div class="addr">11230 Pines Blvd<br>Pembroke Pines, FL 33026</div>
-        <a class="tel" href="tel:+17542174919">(754) 217-4919</a>
-        <div class="acts">
-          <a class="a-map" href="https://www.google.com/maps/search/?api=1&query=11230+Pines+Blvd+Pembroke+Pines+FL+33026" target="_blank" rel="noopener">Directions</a>
-          <a class="a-call" href="tel:+17542174919">Call</a>
-        </div>
-      </div>
-      <div class="store">
-        <a class="city citylink" href="./hollywood-fl-sales">Hollywood →</a>
-        <div class="addr">2420 N Dixie Hwy<br>Hollywood, FL 33020</div>
-        <a class="tel" href="tel:+17542107965">(754) 210-7965</a>
-        <div class="acts">
-          <a class="a-map" href="https://www.google.com/maps/search/?api=1&query=2420+N+Dixie+Hwy+Hollywood+FL+33020" target="_blank" rel="noopener">Directions</a>
-          <a class="a-call" href="tel:+17542107965">Call</a>
-        </div>
-      </div>
-      <div class="store">
-        <a class="city citylink" href="./coral-springs-fl">Coral Springs →</a>
-        <div class="addr">2693 N University Dr<br>Coral Springs, FL 33065</div>
-        <a class="tel" href="tel:+19546889437">(954) 688-9437</a>
-        <div class="acts">
-          <a class="a-map" href="https://www.google.com/maps/search/?api=1&query=2693+N+University+Dr+Coral+Springs+FL+33065" target="_blank" rel="noopener">Directions</a>
-          <a class="a-call" href="tel:+19546889437">Call</a>
-        </div>
-      </div>
-      <div class="store">
-        <a class="city citylink" href="./fort-lauderdale-fl">Fort Lauderdale →</a>
-        <div class="addr">510 NW 7th Ave<br>Fort Lauderdale, FL 33311</div>
-        <a class="tel" href="tel:+17542160106">(754) 216-0106</a>
-        <div class="acts">
-          <a class="a-map" href="https://www.google.com/maps/search/?api=1&query=510+NW+7th+Ave+Fort+Lauderdale+FL+33311" target="_blank" rel="noopener">Directions</a>
-          <a class="a-call" href="tel:+17542160106">Call</a>
-        </div>
-      </div>
+    <div class="cards" id="storeCards">
       <div class="store soon">
-        <span class="pill">COMING SOON</span>
-        <div class="city">West Palm Beach</div>
-        <div class="addr">The biggest Asian supermarket in South Florida.<br>Opening late November / early December 2026.<br><small>Stay tuned for the exact address and grand-opening events.</small></div>
-        <div class="acts"><a class="a-map" href="#blog">Follow the news</a></div>
+        <div class="ph"><img src="./img/wpb.jpg" alt="West Palm Beach store — coming soon" loading="lazy"></div>
+        <div class="inner">
+          <span class="pill">COMING SOON</span>
+          <div class="city">West Palm Beach</div>
+          <div class="addr">The biggest Asian supermarket in South Florida.<br>Opening late November / early December 2026.<br><small>Stay tuned for the exact address and grand-opening events.</small></div>
+          <div class="acts"><a class="a-map" href="#blog">Follow the news</a></div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<div class="band" id="sale">
-  <div class="wrap">
-    <div>
-      <p class="eyebrow" style="color:var(--gold)">Weekly Sale &amp; Online Store</p>
-      <h2>Order online. Pick up in one hour.</h2>
-      <p>Browse this week's specials, add to your cart and pick everything up at the store of your choice — usually ready within an hour.</p>
-      <div class="perks">
-        <div class="perk"><i>🔥</i><div><b>Up to 50% off</b> — weekly ads updated every Monday, 240+ items.</div></div>
-        <div class="perk"><i>🎁</i><div><b>$20 off your first two orders</b> — $10 each for new members.</div></div>
-        <div class="perk"><i>🍽️</i><div><b>Restaurant plan</b> — 10% off plus free delivery on $200+ orders.</div></div>
-        <div class="perk"><i>💳</i><div><b>EBT / SNAP</b> accepted at all six stores.</div></div>
-      </div>
-    </div>
-    <div class="shopcard">
-      <div class="big">kimchimartshop<br>.com</div>
-      <p>Full catalog, weekly ads and pickup — on your phone.</p>
-      <a class="btn btn-w" href="https://kimchimartshop.com" target="_blank" rel="noopener">Shop Now →</a>
-    </div>
-  </div>
-</div>
-
-<section class="sect" id="prepared">
-  <div class="wrap">
-    <p class="eyebrow">Prepared Meals &amp; Ready-to-Eat</p>
-    <h2>Freshly made, ready to enjoy</h2>
-    <p class="lead">Skip the cooking. Korean and Japanese meals made fresh daily in our stores — perfect for quick lunches, family dinners or grab-and-go.</p>
-    <div class="chips">
-      <span class="chip">🍙 Korean kimbap</span>
-      <span class="chip">🍜 Japchae</span>
-      <span class="chip">🥘 Bibimbap</span>
-      <span class="chip">🥬 Banchan side dishes</span>
-      <span class="chip">🍣 Sushi &amp; rolls</span>
-      <span class="chip">🍚 Donburi bowls</span>
-      <span class="chip">🍱 Bento boxes</span>
-      <span class="chip">🧋 Boba tea</span>
-      <span class="chip">🍗 BBQ chicken</span>
     </div>
   </div>
 </section>
@@ -172,8 +171,29 @@
 <section class="sect" id="membership" style="background:var(--soft)">
   <div class="wrap">
     <p class="eyebrow">Membership Program</p>
-    <h2>Save more every time you shop</h2>
-    <p class="lead">Whether you're a family shopping weekly or a restaurant ordering in bulk — sign up in store, start saving on your very next checkout.</p>
+    <h2>How much would you save?</h2>
+    <p class="lead">Slide to your monthly grocery spend. Sign up in store — savings start at your very next checkout.</p>
+
+    <div class="calc">
+      <div>
+        <label for="spend">I spend about</label>
+        <div class="amt" id="spendOut">$400</div>
+        <input type="range" id="spend" min="50" max="5000" step="50" value="400" aria-label="Monthly grocery spend">
+        <div class="ticks"><span>$50</span><span id="tickMax">$5,000</span></div>
+        <div class="seg" id="planSeg" role="group" aria-label="Plan">
+          <button type="button" data-p="k1" aria-pressed="false">K1 · Families 5%</button>
+          <button type="button" data-p="k2" aria-pressed="true">K2 · Business 10%</button>
+        </div>
+      </div>
+      <div class="res k2" id="calcRes" aria-live="polite">
+        <div class="lb">You'd save</div>
+        <div class="big" id="saveBig">$480</div>
+        <div class="sub" id="saveSub"></div>
+        <div class="eq" id="saveEq"></div>
+        <div class="fine">Illustrative estimate based on the spend entered above; exclusions and membership terms may apply.</div>
+      </div>
+    </div>
+
     <div class="mem">
       <div class="plan k1">
         <div class="tag">K1 — EVERYDAY SHOPPERS</div>
@@ -270,11 +290,6 @@
   </div>
 </footer>
 
-<script>
-  // 메뉴 누르면 모바일 메뉴 닫기
-  document.querySelectorAll('#menu a').forEach(function(a){
-    a.addEventListener('click', function(){ document.getElementById('menu').classList.remove('open'); });
-  });
-</script>
+<script src="./assets/home.js"></script>
 </body>
 </html>
