@@ -165,13 +165,15 @@ var KM = {
   function sameDay(d) { var p = String(d || '').match(/(\d{4})\D(\d{1,2})\D(\d{1,2})/); return p && [+p[1], +p[2], +p[3]].join('-') === todayYMD; }
   function pickFor(storeId) {
     var mine = KM.dishes.filter(function (d) { return (!d.store || d.store === 'all' || d.store === storeId) && (!d.date || sameDay(d.date)); });
-    // 날짜나 매장이 지정된 "오늘의 특별" 메뉴 먼저, 그다음 첫 줄(스시) 고정, 나머지는 날짜별로 섞기
+    // 순서: 날짜·매장 지정된 "오늘의 특별" → 첫 줄(스시) 고정 → 직원이 드라이브에 올린 사진(최근 줄 먼저) → 나머지는 날짜별로 섞기
     var special = mine.filter(function (d) { return d.date || (d.store && d.store !== 'all'); });
     var rest = mine.filter(function (d) { return special.indexOf(d) < 0; });
     var pin = rest.shift();
+    var fresh = rest.filter(function (d) { return /^https?:/.test(d.img); }).reverse();
+    rest = rest.filter(function (d) { return fresh.indexOf(d) < 0; });
     var s = seed + storeId.length * 13 + storeId.charCodeAt(0);
     for (var i = rest.length - 1; i > 0; i--) { s = (s * 9301 + 49297) % 233280; var j = Math.floor(s / 233280 * (i + 1)); var t = rest[i]; rest[i] = rest[j]; rest[j] = t; }
-    var out = special.slice(0, 1).concat(pin ? [pin] : [], special.slice(1), rest);
+    var out = special.slice(0, 1).concat(pin ? [pin] : [], special.slice(1), fresh, rest);
     return out.slice(0, 5);
   }
   var tabs = $('#storeTabs'), grid = $('#todayGrid'), curStore = KM.stores[0].id;
