@@ -17,9 +17,13 @@ var KM = {
     { src: './img/food/km-banchan.jpg',         name: 'Banchan made in-store' }
   ],
 
-  // Google 별점 — 숫자를 넣으면 매장 카드와 상단에 표시됨 (null 이면 "리뷰 보기" 링크만)
-  // ⚠ 실제 Google 지도에 나오는 숫자를 그대로 넣을 것
-  google: { rating: null, count: null },
+  // ★ 세일 · 반찬 · 별점은 직원용 구글 시트에서 읽어옴 (구글 드라이브 "김치마트 홈페이지 관리" 폴더)
+  //   시트를 못 읽으면 아래 기본값이 그대로 보임
+  sheets: {
+    sale:    '1Po9cCWjpoBlLGuZLgO9F_6LhpfnFVUSHqq7ZMGju-F4',
+    banchan: '1W-rYKRiMoBFzIh8-yKcq0M6bq_P0cdf3OKlrXU_C3gs',
+    stores:  '1nTALTUQpouuZgpWPgfXB0wnkuhXJj7Tl_kfpaqzKJbA'
+  },
 
   stores: [
     { id: 'miami',   city: 'Miami',           page: './miamikimchimarket',     addr: '15355 S Dixie Hwy<br>Miami, FL 33157<br><small>Palmetto Bay</small>', q: '15355 S Dixie Hwy Miami FL 33157',        tel: '+13059645083', telTxt: '(305) 964-5083', photo: './img/store/collage-miami.jpg',   rating: null, reviews: null },
@@ -29,22 +33,12 @@ var KM = {
     { id: 'ftl',     city: 'Fort Lauderdale', page: './fort-lauderdale-fl',    addr: '510 NW 7th Ave<br>Fort Lauderdale, FL 33311',                         q: '510 NW 7th Ave Fort Lauderdale FL 33311',  tel: '+17542160106', telTxt: '(754) 216-0106', photo: './img/store/collage-ftl.webp', rating: null, reviews: null }
   ],
 
-  // 이번 주 세일 — 월요일마다 교체. today:true 는 "오늘만" 티커에도 뜸
-  // ⚠ 지금 가격은 예시(샘플)임 — 실제 전단 가격으로 바꿀 것
+  // 이번 주 세일 — 시트 "1. 주간세일"에서 채워짐. 비어 있으면 세일 섹션과 TODAY ONLY 띠는 숨김
   saleEnds: 'Sunday',
-  sale: [
-    { e: '🍜', name: 'Shin Ramyun',               size: '5-pack',            was: 6.49,  now: 4.99,  today: true },
-    { e: '🥟', name: 'Bibigo Mandu',              size: '1.5 lb bag',        was: 9.99,  now: 6.99,  today: true },
-    { e: '🥬', name: 'Napa Cabbage',              size: 'per lb',            was: 1.29,  now: 0.69,  today: true },
-    { e: '🥓', name: 'Pork Belly (Samgyeopsal)',  size: 'per lb · cut fresh',was: 6.99,  now: 4.99,  today: true },
-    { e: '🍚', name: 'Calrose Rice',              size: '15 lb bag',         was: 19.99, now: 14.99 },
-    { e: '🌶️', name: 'Gochujang',                 size: '1.1 lb tub',        was: 7.49,  now: 4.99 },
-    { e: '🍐', name: 'Korean Asian Pear',         size: 'each',              was: 2.49,  now: 1.49,  today: true },
-    { e: '🍘', name: 'Shrimp Crackers',           size: '2.64 oz',           was: 2.99,  now: 1.79 }
-  ],
+  sale: [],
 
-  // 오늘의 반찬 — 사진 파일 이름과 가격만 바꾸면 됨. 매일 날짜 기준으로 자동 순환
-  // (매장별로 고정하고 싶으면 stores 의 id 를 byStore 에 넣기)
+  // 오늘의 반찬 — 시트 "2. 오늘의 반찬"에서 채워짐 (아래는 시트를 못 읽을 때 기본값)
+  // 첫 번째 줄(스시)은 항상 보이고, 나머지는 날짜별로 돌아감
   dishes: [
     { img: './img/food/km-sushi-case.jpg',   en: 'Fresh Sushi Rolls',  ko: '스시 롤',    price: 'Made every morning' },
     { img: './img/food/km-poke-bowl.jpg',     en: 'Poke Bowl',          ko: '포케 볼',    price: 'Sushi King' },
@@ -61,7 +55,6 @@ var KM = {
     { img: './img/food/sundubu.jpg',       en: 'Sundubu Jjigae',     ko: '순두부찌개', price: '$9.99' },
     { img: './img/food/bibimbap.jpg',      en: 'Bibimbap Bowl',      ko: '비빔밥',     price: '$10.49' }
   ],
-  byStore: {},  // 예: { hollywood: [0,3,4,5,1] }  ← dishes 번호(0부터)
 
   // SNS 계정
   social: [
@@ -121,27 +114,40 @@ var KM = {
     v.appendChild(src); media.appendChild(v);
   }
 
-  /* 오늘만 티커 */
-  var todays = KM.sale.filter(function (x) { return x.today; });
-  var tk = $('#tickerTrack');
-  if (tk && todays.length) {
-    var one = todays.map(function (x) {
-      return '<span class="it">' + x.e + ' ' + x.name + ' <b>' + money(x.now) + '</b><s>' + money(x.was) + '</s></span>';
-    }).join('');
-    tk.innerHTML = one + one + one + one; // 끊김 없이 돌게 복제
-  } else if (tk) { tk.closest('.ticker').remove(); }
+  /* 공통 도우미 */
+  var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  // 구글 드라이브 공유 링크 → 바로 보이는 이미지 주소
+  function photoUrl(u) {
+    u = String(u || '').trim(); if (!u) return '';
+    var m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=|thumbnail\?id=)([\w-]{20,})/);
+    return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1200' : u;
+  }
+  function show(el, on) { if (el) el.style.display = on ? '' : 'none'; }
 
-  /* 세일 상품 카드 */
-  var pg = $('#saleGrid');
-  if (pg) pg.innerHTML = KM.sale.map(function (x) {
-    var pct = Math.round((1 - x.now / x.was) * 100);
-    return '<a class="pcard rv" href="https://kimchimartshop.com" target="_blank" rel="noopener">' +
-      '<div class="pic">' + (x.img ? '<img src="' + x.img + '" alt="" loading="lazy">' : x.e) +
-      '<span class="off">-' + pct + '%</span>' + (x.today ? '<span class="today1">TODAY ONLY</span>' : '') + '</div>' +
-      '<div class="bd"><div class="nm">' + x.name + '</div><div class="sz">' + x.size + '</div>' +
-      '<div class="pp"><span class="now">' + money(x.now) + '</span><span class="was">' + money(x.was) + '</span></div>' +
-      '<span class="add">Add to pickup order →</span></div></a>';
-  }).join('');
+  /* 오늘만 티커 + 세일 카드 */
+  var tk = $('#tickerTrack'), pg = $('#saleGrid');
+  function renderSale() {
+    var list = KM.sale;
+    var todays = list.filter(function (x) { return x.today; });
+    show(tk && tk.closest('.ticker'), todays.length > 0);
+    show($('#sale'), list.length > 0);
+    show(document.querySelector('#menu a[href="#sale"]'), list.length > 0);
+    if (tk && todays.length) {
+      var one = todays.map(function (x) {
+        return '<span class="it">' + esc(x.e) + ' ' + esc(x.name) + ' <b>' + money(x.now) + '</b>' + (x.was ? '<s>' + money(x.was) + '</s>' : '') + '</span>';
+      }).join('');
+      tk.innerHTML = one + one + one + one; // 끊김 없이 돌게 복제
+    }
+    if (pg) pg.innerHTML = list.map(function (x) {
+      var pct = x.was > x.now ? Math.round((1 - x.now / x.was) * 100) : 0;
+      return '<a class="pcard" href="https://kimchimartshop.com" target="_blank" rel="noopener">' +
+        '<div class="pic">' + (x.img ? '<img src="' + esc(x.img) + '" alt="" loading="lazy">' : esc(x.e || '🛒')) +
+        (pct ? '<span class="off">-' + pct + '%</span>' : '') + (x.today ? '<span class="today1">TODAY ONLY</span>' : '') + '</div>' +
+        '<div class="bd"><div class="nm">' + esc(x.name) + '</div><div class="sz">' + esc(x.size) + '</div>' +
+        '<div class="pp"><span class="now">' + money(x.now) + '</span>' + (x.was ? '<span class="was">' + money(x.was) + '</span>' : '') + '</div>' +
+        '<span class="add">Add to pickup order →</span></div></a>';
+    }).join('');
+  }
 
   // 세일 종료(일요일 자정)까지 남은 시간
   var cd = $('#saleCount');
@@ -155,27 +161,31 @@ var KM = {
 
   /* 오늘의 반찬 */
   var seed = now.key.split('-').reduce(function (a, b) { return a * 31 + +b; }, 7);
+  var todayYMD = now.key.split('-').map(Number).join('-');
+  function sameDay(d) { var p = String(d || '').match(/(\d{4})\D(\d{1,2})\D(\d{1,2})/); return p && [+p[1], +p[2], +p[3]].join('-') === todayYMD; }
   function pickFor(storeId) {
-    if (KM.byStore[storeId]) return KM.byStore[storeId].map(function (i) { return KM.dishes[i]; });
+    var mine = KM.dishes.filter(function (d) { return (!d.store || d.store === 'all' || d.store === storeId) && (!d.date || sameDay(d.date)); });
+    // 날짜나 매장이 지정된 "오늘의 특별" 메뉴 먼저, 그다음 첫 줄(스시) 고정, 나머지는 날짜별로 섞기
+    var special = mine.filter(function (d) { return d.date || (d.store && d.store !== 'all'); });
+    var rest = mine.filter(function (d) { return special.indexOf(d) < 0; });
+    var pin = rest.shift();
     var s = seed + storeId.length * 13 + storeId.charCodeAt(0);
-    var idx = KM.dishes.map(function (_, i) { return i; });
-    for (var i = idx.length - 1; i > 0; i--) { s = (s * 9301 + 49297) % 233280; var j = Math.floor(s / 233280 * (i + 1)); var t = idx[i]; idx[i] = idx[j]; idx[j] = t; }
-    // 스시(0번)는 5개 매장 모두 매일 아침 만드니까 항상 두 번째 카드에 고정
-    idx = idx.filter(function (i) { return i !== 0; });
-    idx.splice(1, 0, 0);
-    return idx.slice(0, 5).map(function (i) { return KM.dishes[i]; });
+    for (var i = rest.length - 1; i > 0; i--) { s = (s * 9301 + 49297) % 233280; var j = Math.floor(s / 233280 * (i + 1)); var t = rest[i]; rest[i] = rest[j]; rest[j] = t; }
+    var out = special.slice(0, 1).concat(pin ? [pin] : [], special.slice(1), rest);
+    return out.slice(0, 5);
   }
-  var tabs = $('#storeTabs'), grid = $('#todayGrid');
+  var tabs = $('#storeTabs'), grid = $('#todayGrid'), curStore = KM.stores[0].id;
   function renderToday(id) {
-    var list = pickFor(id);
+    curStore = id || curStore;
+    var list = pickFor(curStore);
     grid.innerHTML = list.map(function (d, i) {
       return '<article class="dcard' + (i === 0 ? ' big' : '') + '">' +
-        '<img src="' + d.img + '" alt="' + d.en + '" loading="lazy">' +
+        '<img src="' + esc(d.img) + '" alt="' + esc(d.en) + '" loading="lazy">' +
         '<span class="badge' + (i === 0 ? ' hot' : '') + '">' + (i === 0 ? '🔥 CHEF’S PICK' : 'MADE TODAY') + '</span>' +
-        '<button class="share" type="button" aria-label="Share ' + d.en + '" data-n="' + d.en + '">↗</button>' +
-        '<div class="inf"><div class="ko">' + d.ko + '</div><h3>' + d.en + '</h3><div class="pr">' + d.price + '</div></div></article>';
+        '<button class="share" type="button" aria-label="Share ' + esc(d.en) + '" data-n="' + esc(d.en) + '">↗</button>' +
+        '<div class="inf"><div class="ko">' + esc(d.ko) + '</div><h3>' + esc(d.en) + '</h3><div class="pr">' + esc(d.price) + '</div></div></article>';
     }).join('');
-    [].forEach.call(tabs.children, function (b) { b.setAttribute('aria-selected', b.dataset.id === id ? 'true' : 'false'); });
+    [].forEach.call(tabs.children, function (b) { b.setAttribute('aria-selected', b.dataset.id === curStore ? 'true' : 'false'); });
   }
   if (tabs && grid) {
     tabs.innerHTML = KM.stores.map(function (s) { return '<button class="tab" role="tab" data-id="' + s.id + '">' + s.city + '</button>'; }).join('');
@@ -186,39 +196,100 @@ var KM = {
       if (navigator.share) navigator.share(data).catch(function () {});
       else if (navigator.clipboard) navigator.clipboard.writeText(data.text + ' ' + data.url).then(function () { b.textContent = '✓'; setTimeout(function () { b.textContent = '↗'; }, 1500); });
     });
-    renderToday(KM.stores[0].id);
     var dl = $('#todayDate');
     if (dl) dl.textContent = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', weekday: 'long', month: 'long', day: 'numeric' }).format(new Date());
   }
 
-  /* 매장 카드 */
+  /* 매장 카드 + 별점 */
   var mapUrl = function (q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Kimchi Mart ' + q); };
   var stars = function (r) { var f = Math.round(r); return '★★★★★'.slice(0, f) + '☆☆☆☆☆'.slice(0, 5 - f); };
-  var cards = $('#storeCards');
-  if (cards) {
-    cards.insertAdjacentHTML('afterbegin', KM.stores.map(function (s) {
-      var rt = s.rating
-        ? '<span class="st">' + stars(s.rating) + '</span><b>' + s.rating.toFixed(1) + '</b> (' + (s.reviews || 0).toLocaleString() + ' Google reviews)'
-        : '<span class="st">★</span><a href="' + mapUrl(s.q) + '" target="_blank" rel="noopener">Read Google reviews</a>';
-      return '<div class="store rv"><div class="ph"><img src="' + s.photo + '" alt="Kimchi Mart ' + s.city + '" loading="lazy">' +
-        '<span class="open' + (isOpen ? '' : ' no') + '"><i></i>' + openTxt + '</span></div>' +
-        '<div class="inner"><a class="city citylink" href="' + s.page + '">' + s.city + ' →</a>' +
-        '<div class="rt">' + rt + '</div>' +
-        '<div class="addr">' + s.addr + '</div>' +
-        '<a class="tel" href="tel:' + s.tel + '">' + s.telTxt + '</a>' +
-        '<div class="acts"><a class="a-map" href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.q) + '" target="_blank" rel="noopener">Directions</a>' +
-        '<a class="a-call" href="tel:' + s.tel + '">Call</a></div></div></div>';
-    }).join(''));
-  }
-  var tr = $('#trustBar');
-  if (tr) {
-    if (KM.google.rating) {
-      tr.innerHTML = '<div class="g">' + KM.google.rating.toFixed(1) + '</div><div><div class="st">' + stars(KM.google.rating) + '</div><small>' +
-        KM.google.count.toLocaleString() + ' Google reviews across our stores</small></div>' +
-        '<div><div class="g">6</div><small>stores, Miami → West Palm</small></div><div><div class="g">365</div><small>days a year, 8AM–10PM</small></div>';
-    } else tr.remove();
+  var cards = $('#storeCards'), tr = $('#trustBar');
+  function renderStores() {
+    if (cards) {
+      [].slice.call(cards.querySelectorAll('.store:not(.soon)')).forEach(function (n) { n.remove(); });
+      cards.insertAdjacentHTML('afterbegin', KM.stores.map(function (s) {
+        var rt = s.rating
+          ? '<span class="st">' + stars(s.rating) + '</span><b>' + s.rating.toFixed(1) + '</b> (' + (s.reviews || 0).toLocaleString() + ' Google reviews)'
+          : '<span class="st">★</span><a href="' + mapUrl(s.q) + '" target="_blank" rel="noopener">Read Google reviews</a>';
+        return '<div class="store"><div class="ph"><img src="' + esc(s.photo) + '" alt="Kimchi Mart ' + s.city + '" loading="lazy">' +
+          '<span class="open' + (isOpen ? '' : ' no') + '"><i></i>' + openTxt + '</span></div>' +
+          '<div class="inner"><a class="city citylink" href="' + s.page + '">' + s.city + ' →</a>' +
+          '<div class="rt">' + rt + '</div>' +
+          '<div class="addr">' + s.addr + '</div>' +
+          '<a class="tel" href="tel:' + s.tel + '">' + s.telTxt + '</a>' +
+          '<div class="acts"><a class="a-map" href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.q) + '" target="_blank" rel="noopener">Directions</a>' +
+          '<a class="a-call" href="tel:' + s.tel + '">Call</a></div></div></div>';
+      }).join(''));
+    }
+    if (tr) {
+      // 매장별 별점을 리뷰 수로 가중 평균
+      var rated = KM.stores.filter(function (s) { return s.rating && s.reviews; });
+      var cnt = rated.reduce(function (a, s) { return a + s.reviews; }, 0);
+      if (cnt) {
+        var avg = rated.reduce(function (a, s) { return a + s.rating * s.reviews; }, 0) / cnt;
+        tr.innerHTML = '<div class="g">' + avg.toFixed(1) + '</div><div><div class="st">' + stars(avg) + '</div><small>' +
+          cnt.toLocaleString() + ' Google reviews across our stores</small></div>' +
+          '<div><div class="g">6</div><small>stores, Miami → West Palm</small></div><div><div class="g">365</div><small>days a year, 8AM–10PM</small></div>';
+      }
+      show(tr, cnt > 0);
+    }
   }
 
+  /* 구글 시트 읽기 — 직원이 시트를 고치면 여기로 들어옴 */
+  function parseCSV(text) {
+    var rows = [], row = [], f = '', q = false;
+    for (var i = 0; i < text.length; i++) {
+      var c = text[i];
+      if (q) { if (c === '"') { if (text[i + 1] === '"') { f += '"'; i++; } else q = false; } else f += c; }
+      else if (c === '"') q = true;
+      else if (c === ',') { row.push(f); f = ''; }
+      else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i++; row.push(f); rows.push(row); row = []; f = ''; }
+      else f += c;
+    }
+    if (f !== '' || row.length) { row.push(f); rows.push(row); }
+    var head = (rows.shift() || []).map(function (h) { return h.trim().toLowerCase(); });
+    return rows.filter(function (r) { return r.some(function (v) { return v.trim(); }); }).map(function (r) {
+      var o = {}; head.forEach(function (h, k) { o[h] = (r[k] || '').trim(); }); return o;
+    });
+  }
+  var yes = function (v) { return /^(y|yes|o|ok|true|1|✓|✔|승인)$/i.test(String(v || '').trim()); };
+  var num = function (v) { var n = parseFloat(String(v || '').replace(/[^0-9.]/g, '')); return isNaN(n) ? 0 : n; };
+  function applySheets(data) {
+    if (data.sale) KM.sale = data.sale.filter(function (r) { return yes(r.approved) && r.name && num(r.now); }).map(function (r) {
+      return { e: r.emoji, name: r.name, size: r.size, was: num(r.was), now: num(r.now), today: yes(r.today_only), img: photoUrl(r.photo_url) };
+    });
+    if (data.banchan) {
+      var ds = data.banchan.filter(function (r) { return yes(r.approved) && r.name_en && r.photo_url; }).map(function (r) {
+        return { store: (r.store || 'all').toLowerCase(), date: r.date, en: r.name_en, ko: r.name_ko, price: r.price, img: photoUrl(r.photo_url) };
+      });
+      if (ds.length) KM.dishes = ds;
+    }
+    if (data.stores) data.stores.forEach(function (r) {
+      var s = KM.stores.filter(function (x) { return x.id === (r.id || '').toLowerCase(); })[0]; if (!s) return;
+      if (num(r.google_rating)) { s.rating = num(r.google_rating); s.reviews = num(r.google_reviews); }
+      if (r.photo_url) s.photo = photoUrl(r.photo_url);
+    });
+  }
+  function renderAll() { renderSale(); if (grid) renderToday(); renderStores(); }
+
+  // 1) 지난번에 읽은 시트 내용으로 먼저 그림 (없으면 기본값)  2) 최신 시트를 읽어서 다시 그림
+  var CK = 'km_sheets_v1';
+  try { var cached = JSON.parse(localStorage.getItem(CK) || 'null'); if (cached) applySheets(cached); } catch (e) {}
+  renderAll();
+  var keys = Object.keys(KM.sheets || {});
+  Promise.all(keys.map(function (k) {
+    // export=csv 사용 (gviz 는 숫자·글자가 섞인 칸의 글자를 지워버림)
+    return fetch('https://docs.google.com/spreadsheets/d/' + KM.sheets[k] + '/export?format=csv&t=' + Date.now())
+      .then(function (r) { if (!r.ok) throw 0; return r.text(); })
+      .then(function (t) { if (/^\s*</.test(t)) throw 0; return [k, parseCSV(t)]; })
+      .catch(function () { return [k, null]; });
+  })).then(function (res) {
+    var data = {}; res.forEach(function (p) { if (p[1]) data[p[0]] = p[1]; });
+    if (!Object.keys(data).length) return; // 시트를 못 읽으면 그대로 둠
+    try { localStorage.setItem(CK, JSON.stringify(data)); } catch (e) {}
+    applySheets(data); renderAll();
+    if (fCard && fCard.dataset.id) showStore(KM.stores.filter(function (s) { return s.id === fCard.dataset.id; })[0]);
+  });
   /* 멤버십 계산기 */
   var rng = $('#spend'), plan = 'k2';
   function calc() {
@@ -259,8 +330,9 @@ var KM = {
   var fCard = $('#fCard'), fMsg = $('#fMsg'), fCity = $('#fCity');
   function km(a, b) { var r = Math.PI / 180, x = (b[1] - a[1]) * r * Math.cos((a[0] + b[0]) / 2 * r), y = (b[0] - a[0]) * r; return Math.sqrt(x * x + y * y) * 6371; }
   function showStore(s, dist) {
+    fCard.dataset.id = s.id;
     var plain = s.addr.replace(/<small>.*?<\/small>/, '').replace(/<br>/g, ', ').replace(/,\s*$/, '');
-    fCard.innerHTML = '<div class="fpic"><img src="' + s.photo + '" alt="Inside Kimchi Mart ' + s.city + '"></div><div class="finfo"><div class="fmeta' + (isOpen ? '' : ' no') + '"><i></i>' + openTxt + (dist ? ' · ' + (dist / 1.609).toFixed(1) + ' mi away' : '') + '</div>' +
+    fCard.innerHTML = '<div class="fpic"><img src="' + esc(s.photo) + '" alt="Inside Kimchi Mart ' + s.city + '"></div><div class="finfo"><div class="fmeta' + (isOpen ? '' : ' no') + '"><i></i>' + openTxt + (dist ? ' · ' + (dist / 1.609).toFixed(1) + ' mi away' : '') + '</div>' +
       '<h3>' + s.city + '</h3><div class="fa">' + s.addr + '</div><a class="ftel" href="tel:' + s.tel + '">' + s.telTxt + '</a>' +
       '<div class="ftags"><span>OPEN DAILY 8–10</span><span>EBT / SNAP</span><span>FRESH PREPARED FOOD</span></div>' +
       '<div class="fbtns"><button type="button" class="fb-copy" data-a="Kimchi Mart, ' + plain + '">Copy address</button>' +
