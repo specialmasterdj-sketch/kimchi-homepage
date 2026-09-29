@@ -24,7 +24,7 @@
 </script>
 <link rel="stylesheet" href="./assets/site.css">
 <link rel="stylesheet" href="./assets/home.css">
-<link rel="preload" as="image" href="./img/food/gimbap.jpg">
+<link rel="preload" as="image" href="./img/food/km-sushi-case.jpg">
 </head>
 <body>
 
@@ -86,9 +86,10 @@
       <p>Freshly prepared favorites make lunch, dinner and sharing around the table feel effortless.</p>
     </div>
     <div class="krow">
-      <a class="kcard" href="#prepared"><img src="./img/food/bibimbap.jpg" alt="Bibimbap bowl" loading="lazy"><div><h3>Hot meals</h3><p>Comforting favorites, ready to enjoy</p></div></a>
-      <a class="kcard" href="#prepared"><img src="./img/food/gimbap.jpg" alt="Kimbap rolls" loading="lazy"><div><h3>Kimbap &amp; rolls</h3><p>Made for lunch, picnics or a quick bite</p></div></a>
-      <a class="kcard" href="#prepared"><img src="./img/food/japchae.jpg" alt="Japchae and banchan" loading="lazy"><div><h3>Banchan</h3><p>A colorful table, without all the prep</p></div></a>
+      <a class="kcard" href="#prepared"><img src="./img/food/km-hot-meals.jpg" alt="Hot meals in the Kimchi Mart deli case" loading="lazy"><div><h3>Hot meals</h3><p>Comforting favorites, ready to enjoy</p></div></a>
+      <a class="kcard" href="#prepared"><img src="./img/food/km-sushi-case.jpg" alt="Fresh sushi rolls in the Kimchi Mart case" loading="lazy"><span class="kbadge">Made every morning</span><div><h3>Sushi</h3><p>Rolled fresh daily at all five stores</p></div></a>
+      <a class="kcard" href="#prepared"><img src="./img/food/km-kimbap-case.jpg" alt="Kimbap and samgak rice balls" loading="lazy"><div><h3>Kimbap</h3><p>Made for lunch, picnics or a quick bite</p></div></a>
+      <a class="kcard" href="#prepared"><img src="./img/food/km-banchan.jpg" alt="Korean banchan side dishes" loading="lazy"><div><h3>Banchan</h3><p>A colorful table, without all the prep</p></div></a>
     </div>
   </div>
 </section>
@@ -168,29 +169,31 @@
   </div>
 </section>
 
-<section class="sect" id="membership" style="background:var(--soft)">
+<section class="sect" id="membership">
   <div class="wrap">
-    <p class="eyebrow">Membership Program</p>
-    <h2>How much would you save?</h2>
-    <p class="lead">Slide to your monthly grocery spend. Sign up in store — savings start at your very next checkout.</p>
-
-    <div class="calc">
-      <div>
-        <label for="spend">I spend about</label>
-        <div class="amt" id="spendOut">$400</div>
-        <input type="range" id="spend" min="50" max="5000" step="50" value="400" aria-label="Monthly grocery spend">
-        <div class="ticks"><span>$50</span><span id="tickMax">$5,000</span></div>
-        <div class="seg" id="planSeg" role="group" aria-label="Plan">
-          <button type="button" data-p="k1" aria-pressed="false">K1 · Families 5%</button>
-          <button type="button" data-p="k2" aria-pressed="true">K2 · Business 10%</button>
-        </div>
+    <div class="msplit">
+      <div class="mphoto" id="memPhotos" aria-label="Inside Kimchi Mart">
+        <img class="on" src="./img/store/ftl-front.webp" alt="Kimchi Mart storefront">
+        <img src="./img/store/ftl-foodcourt.webp" alt="Food court at Kimchi Mart" loading="lazy">
+        <img src="./img/store/ftl-aisle.webp" alt="Aisles and frozen section" loading="lazy">
+        <img src="./img/store/ftl-fish.webp" alt="Fresh fish market" loading="lazy">
+        <div class="mdots" id="memDots"></div>
+        <span class="msticker">The more<br>you shop,<br>the more<br>you save</span>
       </div>
-      <div class="res k2" id="calcRes" aria-live="polite">
-        <div class="lb">You'd save</div>
-        <div class="big" id="saveBig">$480</div>
-        <div class="sub" id="saveSub"></div>
-        <div class="eq" id="saveEq"></div>
-        <div class="fine">Illustrative estimate based on the spend entered above; exclusions and membership terms may apply.</div>
+      <div>
+        <p class="meb">K1 &amp; K2 Membership</p>
+        <h2 class="mh">Savings you can actually see.</h2>
+        <p class="lead">Turn percentages into something meaningful. Move the slider to see how annual member savings could add up based on your monthly grocery spend.</p>
+        <div class="mcalc">
+          <div class="seg" id="planSeg" role="group" aria-label="Plan">
+            <button type="button" data-p="k1" aria-pressed="false">K1 · 5%</button>
+            <button type="button" data-p="k2" aria-pressed="true">K2 · 10%</button>
+          </div>
+          <label for="spend">Your monthly grocery spend</label>
+          <div class="mrow"><input type="range" id="spend" min="50" max="3000" step="50" value="400"><output id="spendOut">$400</output></div>
+          <div class="mres"><span id="saveLbl">Potential annual savings at 10%</span><b id="saveBig" aria-live="polite">$480</b></div>
+          <p class="fine">Illustrative estimate based on spending entered above; exclusions and membership terms may apply.</p>
+        </div>
       </div>
     </div>
 
@@ -211,6 +214,36 @@
   </div>
 </section>
 
+<section class="finder" id="find">
+  <div class="wrap fsplit">
+    <div class="fcard" id="fCard" aria-live="polite"></div>
+    <div>
+      <h2>Find your neighborhood market.</h2>
+      <p class="flead">Six South Florida locations bring fresh Asian groceries closer to home. Start with a city or ZIP code.</p>
+      <form class="fform" id="fForm">
+        <input id="fQ" type="text" inputmode="search" autocomplete="postal-code" placeholder="City or ZIP code" aria-label="City or ZIP code">
+        <button type="submit">Find a store</button>
+      </form>
+      <div class="fmsg" id="fMsg"></div>
+      <div class="fcity" id="fCity"></div>
+      <button type="button" class="floc" id="fLoc">📍 Use my current location</button>
+    </div>
+  </div>
+</section>
+<section class="sns" id="social">
+  <div class="wrap">
+    <div class="khead">
+      <div>
+        <p class="keb">Follow along</p>
+        <h2>Watch, scroll, get hungry.</h2>
+      </div>
+      <p>New finds, taste tests and recipes from our aisles every week. Follow Kimchi Mart and never miss a deal.</p>
+    </div>
+    <div class="soc-links" id="socLinks"></div>
+    <div class="yt-row" id="ytRow"></div>
+    <div style="text-align:center;margin-top:26px"><a class="btn btn-w" href="https://www.youtube.com/@kimchimarttv" target="_blank" rel="noopener">▶ More videos on YouTube</a></div>
+  </div>
+</section>
 <section class="sect" id="about">
   <div class="wrap split">
     <div>
@@ -256,6 +289,8 @@
         <div class="social">
           <a href="https://www.instagram.com/kimchimartmiami" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
           <a href="https://www.facebook.com/kimchimartmiami" target="_blank" rel="noopener" aria-label="Facebook">👍</a>
+          <a href="https://www.youtube.com/@kimchimarttv" target="_blank" rel="noopener" aria-label="YouTube">▶️</a>
+          <a href="https://www.tiktok.com/@kimchimartmiami" target="_blank" rel="noopener" aria-label="TikTok">🎵</a>
           <a href="mailto:info@miamikimchi.com" aria-label="Email">✉️</a>
         </div>
       </div>

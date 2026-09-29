@@ -10,11 +10,11 @@ var KM = {
   // 없으면 아래 사진들이 천천히 줌되며 넘어감
   heroVideo: './img/hero.mp4',
   heroSlides: [
-    { src: './img/food/gimbap.jpg',       name: 'Fresh kimbap, rolled daily' },
-    { src: './img/food/bulgogi.jpg',      name: 'Bulgogi, marinated in-house' },
-    { src: './img/food/dakgangjeong.jpg', name: 'Sweet & crispy dakgangjeong' },
-    { src: './img/food/bibimbap.jpg',     name: 'Bibimbap bowls' },
-    { src: './img/food/samgyeopsal.jpg',  name: 'Pork belly, cut to order' }
+    { src: './img/food/km-sushi-case.jpg',      name: 'Sushi rolled fresh every morning · all 5 stores' },
+    { src: './img/food/km-poke-bowl.jpg',       name: 'Sushi King poke bowls' },
+    { src: './img/food/km-sashimi-platter.jpg', name: 'Sashimi & nigiri platters' },
+    { src: './img/food/km-hot-meals.jpg',       name: 'Hot meals from our deli' },
+    { src: './img/food/km-banchan.jpg',         name: 'Banchan made in-store' }
   ],
 
   // Google 별점 — 숫자를 넣으면 매장 카드와 상단에 표시됨 (null 이면 "리뷰 보기" 링크만)
@@ -22,11 +22,11 @@ var KM = {
   google: { rating: null, count: null },
 
   stores: [
-    { id: 'miami',   city: 'Miami',           page: './miamikimchimarket',     addr: '15355 S Dixie Hwy<br>Miami, FL 33157<br><small>Palmetto Bay</small>', q: '15355 S Dixie Hwy Miami FL 33157',        tel: '+13059645083', telTxt: '(305) 964-5083', photo: './img/hero.jpg',            rating: null, reviews: null },
-    { id: 'pembroke',city: 'Pembroke Pines',  page: './pembroke-pine-fl-sales', addr: '11230 Pines Blvd<br>Pembroke Pines, FL 33026',                        q: '11230 Pines Blvd Pembroke Pines FL 33026', tel: '+17542174919', telTxt: '(754) 217-4919', photo: './img/store/g2-produce.jpg', rating: null, reviews: null },
-    { id: 'hollywood',city:'Hollywood',       page: './hollywood-fl-sales',    addr: '2420 N Dixie Hwy<br>Hollywood, FL 33020',                             q: '2420 N Dixie Hwy Hollywood FL 33020',      tel: '+17542107965', telTxt: '(754) 210-7965', photo: './img/store/storefront.jpg', rating: null, reviews: null },
-    { id: 'coral',   city: 'Coral Springs',   page: './coral-springs-fl',      addr: '2693 N University Dr<br>Coral Springs, FL 33065',                     q: '2693 N University Dr Coral Springs FL 33065', tel: '+19546889437', telTxt: '(954) 688-9437', photo: './img/store/g1-kimchi.jpg', rating: null, reviews: null },
-    { id: 'ftl',     city: 'Fort Lauderdale', page: './fort-lauderdale-fl',    addr: '510 NW 7th Ave<br>Fort Lauderdale, FL 33311',                         q: '510 NW 7th Ave Fort Lauderdale FL 33311',  tel: '+17542160106', telTxt: '(754) 216-0106', photo: './img/store/g4-meat.jpg',   rating: null, reviews: null }
+    { id: 'miami',   city: 'Miami',           page: './miamikimchimarket',     addr: '15355 S Dixie Hwy<br>Miami, FL 33157<br><small>Palmetto Bay</small>', q: '15355 S Dixie Hwy Miami FL 33157',        tel: '+13059645083', telTxt: '(305) 964-5083', photo: './img/store/collage-miami.jpg',   rating: null, reviews: null },
+    { id: 'pembroke',city: 'Pembroke Pines',  page: './pembroke-pine-fl-sales', addr: '11230 Pines Blvd<br>Pembroke Pines, FL 33026',                        q: '11230 Pines Blvd Pembroke Pines FL 33026', tel: '+17542174919', telTxt: '(754) 217-4919', photo: './img/store/collage-pembroke.jpg', rating: null, reviews: null },
+    { id: 'hollywood',city:'Hollywood',       page: './hollywood-fl-sales',    addr: '2420 N Dixie Hwy<br>Hollywood, FL 33020',                             q: '2420 N Dixie Hwy Hollywood FL 33020',      tel: '+17542107965', telTxt: '(754) 210-7965', photo: './img/store/collage-hollywood.jpg', rating: null, reviews: null },
+    { id: 'coral',   city: 'Coral Springs',   page: './coral-springs-fl',      addr: '2693 N University Dr<br>Coral Springs, FL 33065',                     q: '2693 N University Dr Coral Springs FL 33065', tel: '+19546889437', telTxt: '(954) 688-9437', photo: './img/store/collage-coral.webp', rating: null, reviews: null },
+    { id: 'ftl',     city: 'Fort Lauderdale', page: './fort-lauderdale-fl',    addr: '510 NW 7th Ave<br>Fort Lauderdale, FL 33311',                         q: '510 NW 7th Ave Fort Lauderdale FL 33311',  tel: '+17542160106', telTxt: '(754) 216-0106', photo: './img/store/collage-ftl.webp', rating: null, reviews: null }
   ],
 
   // 이번 주 세일 — 월요일마다 교체. today:true 는 "오늘만" 티커에도 뜸
@@ -46,6 +46,11 @@ var KM = {
   // 오늘의 반찬 — 사진 파일 이름과 가격만 바꾸면 됨. 매일 날짜 기준으로 자동 순환
   // (매장별로 고정하고 싶으면 stores 의 id 를 byStore 에 넣기)
   dishes: [
+    { img: './img/food/km-sushi-case.jpg',   en: 'Fresh Sushi Rolls',  ko: '스시 롤',    price: 'Made every morning' },
+    { img: './img/food/km-poke-bowl.jpg',     en: 'Poke Bowl',          ko: '포케 볼',    price: 'Sushi King' },
+    { img: './img/food/km-sashimi-platter.jpg', en: 'Sashimi Platter',  ko: '모둠 회',    price: 'Sushi King' },
+    { img: './img/food/km-chirashi-tray.jpg', en: 'Chirashi Tray',      ko: '회덮밥',     price: 'Sushi King' },
+    { img: './img/food/km-samgak.jpg',        en: 'Samgak Kimbap',      ko: '삼각김밥',   price: 'Grab & go' },
     { img: './img/food/japchae.jpg',       en: 'Japchae',            ko: '잡채',       price: '$8.99' },
     { img: './img/food/gimbap.jpg',        en: 'Kimbap',             ko: '김밥',       price: '$6.99' },
     { img: './img/food/tteokbokki.jpg',    en: 'Tteokbokki',         ko: '떡볶이',     price: '$7.49' },
@@ -56,7 +61,22 @@ var KM = {
     { img: './img/food/sundubu.jpg',       en: 'Sundubu Jjigae',     ko: '순두부찌개', price: '$9.99' },
     { img: './img/food/bibimbap.jpg',      en: 'Bibimbap Bowl',      ko: '비빔밥',     price: '$10.49' }
   ],
-  byStore: {}  // 예: { hollywood: [0,3,4,5,1] }  ← dishes 번호(0부터)
+  byStore: {},  // 예: { hollywood: [0,3,4,5,1] }  ← dishes 번호(0부터)
+
+  // SNS 계정
+  social: [
+    { k: 'ig', name: 'Instagram', handle: '@kimchimartmiami', url: 'https://www.instagram.com/kimchimartmiami' },
+    { k: 'yt', name: 'YouTube',   handle: '@kimchimarttv',    url: 'https://www.youtube.com/@kimchimarttv' },
+    { k: 'tt', name: 'TikTok',    handle: '@kimchimartmiami', url: 'https://www.tiktok.com/@kimchimartmiami' },
+    { k: 'tt', name: 'TikTok',    handle: '@kimchimarttv',    url: 'https://www.tiktok.com/@kimchimarttv' }
+  ],
+  // 홈에 보여줄 YouTube 영상 — 영상 주소 youtube.com/shorts/XXXX 의 XXXX 만 넣으면 됨
+  videos: [
+    { id: 'Dwmh_IKyDGs', title: 'This Donut Has the Creamiest Filling 🤤🍩' },
+    { id: 'ydXpRhAPkG4', title: 'The Sound of Boba Just Hits Different 🧋' },
+    { id: 'r-lMcMaAL0Y', title: 'Trying to Save Money at Kimchi Mart 🛒' },
+    { id: 'XzdmIbfLGXk', title: 'Visit Kimchi Mart Like a Korean Convenience Store 🇰🇷' }
+  ]
 };
 
 /* ───────── 아래는 동작 코드 ───────── */
@@ -140,6 +160,9 @@ var KM = {
     var s = seed + storeId.length * 13 + storeId.charCodeAt(0);
     var idx = KM.dishes.map(function (_, i) { return i; });
     for (var i = idx.length - 1; i > 0; i--) { s = (s * 9301 + 49297) % 233280; var j = Math.floor(s / 233280 * (i + 1)); var t = idx[i]; idx[i] = idx[j]; idx[j] = t; }
+    // 스시(0번)는 5개 매장 모두 매일 아침 만드니까 항상 두 번째 카드에 고정
+    idx = idx.filter(function (i) { return i !== 0; });
+    idx.splice(1, 0, 0);
     return idx.slice(0, 5).map(function (i) { return KM.dishes[i]; });
   }
   var tabs = $('#storeTabs'), grid = $('#todayGrid');
@@ -199,24 +222,112 @@ var KM = {
   /* 멤버십 계산기 */
   var rng = $('#spend'), plan = 'k2';
   function calc() {
-    var m = +rng.value, rate = plan === 'k1' ? .05 : .10, yr = m * 12 * rate;
-    $('#spendOut').innerHTML = '$' + m.toLocaleString() + ' <small>/ month</small>';
-    $('#saveBig').textContent = '$' + Math.round(yr).toLocaleString();
-    $('#saveSub').textContent = 'saved every year with ' + plan.toUpperCase() + ' (' + (rate * 100) + '% off)';
-    $('#saveEq').textContent = '≈ $' + (m * rate).toFixed(0) + ' back every month · $' + (m * rate * 12 / 52).toFixed(2) + ' a week';
-    $('#calcRes').className = 'res ' + plan;
+    var m = +rng.value, rate = plan === 'k1' ? .05 : .10;
+    $('#spendOut').textContent = '$' + m.toLocaleString();
+    $('#saveBig').textContent = '$' + Math.round(m * 12 * rate).toLocaleString();
+    $('#saveLbl').textContent = 'Potential annual savings at ' + (rate * 100) + '%';
+    rng.style.setProperty('--p', ((m - rng.min) / (rng.max - rng.min) * 100) + '%');
   }
   if (rng) {
     rng.addEventListener('input', calc);
     $('#planSeg').addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return; plan = b.dataset.p;
       [].forEach.call(this.children, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      rng.max = plan === 'k1' ? 1500 : 5000;
-      if (+rng.value > +rng.max) rng.value = rng.max;
-      $('#tickMax').textContent = '$' + (+rng.max).toLocaleString();
       calc();
     });
     calc();
+  }
+
+  /* 멤버십 왼쪽 사진 돌아가기 */
+  var mp = $('#memPhotos');
+  if (mp) {
+    var pics = mp.querySelectorAll('img'), dots = $('#memDots'), mi = 0;
+    dots.innerHTML = [].map.call(pics, function (_, i) { return '<button type="button" aria-label="Photo ' + (i + 1) + '"' + (i ? '' : ' class="on"') + '></button>'; }).join('');
+    function go(i) { pics[mi].classList.remove('on'); dots.children[mi].classList.remove('on'); mi = i; pics[mi].classList.add('on'); dots.children[mi].classList.add('on'); }
+    dots.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) go([].indexOf.call(dots.children, b)); });
+    if (!reduce) setInterval(function () { go((mi + 1) % pics.length); }, 4000);
+  }
+  /* 매장 찾기 — 도시 이름 / ZIP / 내 위치로 가장 가까운 매장 */
+  var GEO = { miami: [25.626, -80.341], pembroke: [26.007, -80.299], hollywood: [26.033, -80.146], coral: [26.266, -80.253], ftl: [26.129, -80.152] };
+  var NEAR = { // 주변 동네 → 매장
+    miami: 'miami kendall pinecrest palmetto bay cutler bay homestead south miami coral gables doral hialeah westchester',
+    pembroke: 'pembroke pines miramar weston davie cooper city southwest ranches',
+    hollywood: 'hollywood hallandale dania aventura north miami sunny isles',
+    coral: 'coral springs parkland tamarac margate coconut creek pompano boca raton deerfield',
+    ftl: 'fort lauderdale ft lauderdale lauderhill plantation sunrise wilton manors oakland park lauderdale lakes'
+  };
+  var fCard = $('#fCard'), fMsg = $('#fMsg'), fCity = $('#fCity');
+  function km(a, b) { var r = Math.PI / 180, x = (b[1] - a[1]) * r * Math.cos((a[0] + b[0]) / 2 * r), y = (b[0] - a[0]) * r; return Math.sqrt(x * x + y * y) * 6371; }
+  function showStore(s, dist) {
+    var plain = s.addr.replace(/<small>.*?<\/small>/, '').replace(/<br>/g, ', ').replace(/,\s*$/, '');
+    fCard.innerHTML = '<div class="fpic"><img src="' + s.photo + '" alt="Inside Kimchi Mart ' + s.city + '"></div><div class="finfo"><div class="fmeta' + (isOpen ? '' : ' no') + '"><i></i>' + openTxt + (dist ? ' · ' + (dist / 1.609).toFixed(1) + ' mi away' : '') + '</div>' +
+      '<h3>' + s.city + '</h3><div class="fa">' + s.addr + '</div><a class="ftel" href="tel:' + s.tel + '">' + s.telTxt + '</a>' +
+      '<div class="ftags"><span>OPEN DAILY 8–10</span><span>EBT / SNAP</span><span>FRESH PREPARED FOOD</span></div>' +
+      '<div class="fbtns"><button type="button" class="fb-copy" data-a="Kimchi Mart, ' + plain + '">Copy address</button>' +
+      '<a class="fb-dir" href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(s.q) + '" target="_blank" rel="noopener">Directions</a>' +
+      '<a class="fb-call" href="tel:' + s.tel + '">Call</a></div>' +
+      '<p class="fnote"><a href="' + s.page + '" style="text-decoration:underline">Store page, weekly ad &amp; departments →</a></p></div>';
+    [].forEach.call(fCity.children, function (b) { b.setAttribute('aria-pressed', b.dataset.id === s.id ? 'true' : 'false'); });
+  }
+  function nearest(pt) {
+    var best = null, bd = 1e9;
+    KM.stores.forEach(function (s) { var d = km(pt, GEO[s.id]); if (d < bd) { bd = d; best = s; } });
+    showStore(best, bd);
+    fMsg.textContent = bd > 60 ? 'Our closest store is ' + Math.round(bd / 1.609) + ' miles away — West Palm Beach opens late 2026!' : 'Closest store: ' + best.city;
+  }
+  if (fCard) {
+    fCity.innerHTML = KM.stores.map(function (s) { return '<button type="button" data-id="' + s.id + '">' + s.city + '</button>'; }).join('');
+    fCity.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) { fMsg.textContent = ''; showStore(KM.stores.filter(function (s) { return s.id === b.dataset.id; })[0]); } });
+    fCard.addEventListener('click', function (e) {
+      var b = e.target.closest('.fb-copy'); if (!b || !navigator.clipboard) return;
+      navigator.clipboard.writeText(b.dataset.a).then(function () { b.textContent = '✓ Copied'; setTimeout(function () { b.textContent = 'Copy address'; }, 1600); });
+    });
+    $('#fForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var q = $('#fQ').value.trim().toLowerCase(); if (!q) return;
+      if (/^\d{5}$/.test(q)) {
+        fMsg.textContent = 'Searching…';
+        fetch('https://api.zippopotam.us/us/' + q).then(function (r) { if (!r.ok) throw 0; return r.json(); })
+          .then(function (d) { var p = d.places[0]; nearest([+p.latitude, +p.longitude]); })
+          .catch(function () { fMsg.textContent = 'We couldn’t find that ZIP code — try a city name.'; });
+        return;
+      }
+      if (/west palm|palm beach|boynton|lake worth|jupiter|wellington/.test(q)) { fMsg.textContent = 'West Palm Beach opens late Nov / early Dec 2026 — closest today:'; showStore(KM.stores.filter(function (s) { return s.id === 'coral'; })[0]); return; }
+      for (var id in NEAR) if (NEAR[id].indexOf(q) > -1 || q.indexOf(id) > -1 || NEAR[id].split(' ').some(function (w) { return w.length > 3 && q.indexOf(w) > -1; })) {
+        fMsg.textContent = 'Closest store:'; showStore(KM.stores.filter(function (s) { return s.id === id; })[0]); return;
+      }
+      fMsg.textContent = 'Try a ZIP code (e.g. 33020) or tap a store below.';
+    });
+    $('#fLoc').addEventListener('click', function () {
+      if (!navigator.geolocation) return;
+      fMsg.textContent = 'Finding you…';
+      navigator.geolocation.getCurrentPosition(function (p) { nearest([p.coords.latitude, p.coords.longitude]); }, function () { fMsg.textContent = 'Location is off — enter a city or ZIP instead.'; }, { timeout: 8000 });
+    });
+    showStore(KM.stores.filter(function (s) { return s.id === 'hollywood'; })[0]);
+  }
+
+  /* SNS — 계정 버튼 + YouTube 영상 (누르면 그 자리에서 재생) */
+  var ICON = {
+    ig: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>',
+    yt: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4" fill="currentColor"/><path d="M10 9l5 3-5 3z" fill="#16211b"/></svg>',
+    tt: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M14 3c.5 2.8 2.3 4.4 5 4.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>'
+  };
+  var sl = $('#socLinks');
+  if (sl) sl.innerHTML = KM.social.map(function (s) {
+    return '<a class="soc soc-' + s.k + '" href="' + s.url + '" target="_blank" rel="noopener">' + ICON[s.k] + '<span><b>' + s.name + '</b>' + s.handle + '</span></a>';
+  }).join('');
+  var yr = $('#ytRow');
+  if (yr) {
+    yr.innerHTML = KM.videos.map(function (v) {
+      return '<button type="button" class="yt rv" data-id="' + v.id + '" aria-label="Play: ' + v.title + '">' +
+        '<img src="https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg" alt="" loading="lazy">' +
+        '<span class="play">▶</span><span class="yt-t">' + v.title + '</span></button>';
+    }).join('');
+    yr.addEventListener('click', function (e) {
+      var b = e.target.closest('.yt'); if (!b || b.classList.contains('on')) return;
+      b.classList.add('on');
+      b.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + b.dataset.id + '?autoplay=1&playsinline=1&rel=0" title="Kimchi Mart video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+    });
   }
 
   /* 스크롤 등장 + 픽업 타임라인 */
