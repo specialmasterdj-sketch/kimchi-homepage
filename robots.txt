@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
 
-# 미리보기 주소입니다 — 진짜 주소(miamikimchi.com)로 옮길 때 robots.production.txt 로 교체하세요.
+Sitemap: https://www.miamikimchi.com/sitemap.xml
