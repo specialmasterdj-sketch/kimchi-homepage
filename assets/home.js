@@ -250,6 +250,7 @@ var KM = {
     }
     if (f !== '' || row.length) { row.push(f); rows.push(row); }
     var head = (rows.shift() || []).map(function (h) { return h.trim().toLowerCase(); });
+    if (head.length && !head[0]) head[0] = 'approved'; // 직원이 A1 제목을 지워도 동작하게
     return rows.filter(function (r) { return r.some(function (v) { return v.trim(); }); }).map(function (r) {
       var o = {}; head.forEach(function (h, k) { o[h] = (r[k] || '').trim(); }); return o;
     });
