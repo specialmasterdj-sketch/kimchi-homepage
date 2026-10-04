@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SUSHI KING — Fresh Sushi Made Daily at Kimchi Mart</title>
+<meta name="description" content="SUSHI KING by Kimchi Mart: sushi rolls, nigiri, sashimi platters and poke bowls made fresh every morning at all five South Florida stores.">
+<link rel="canonical" href="https://www.miamikimchi.com/sushi-king/">
+<meta property="og:title" content="SUSHI KING — Made fresh every morning">
+<meta property="og:description" content="Sushi rolls, platters and poke bowls made daily at Kimchi Mart.">
+<meta property="og:image" content="https://www.miamikimchi.com/img/food/km-sushi-case.jpg">
+<link rel="icon" href="../img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+  :root{ --sk:#e8412c; --sk-d:#b92d1c; --ink2:#15110f; }
+  .skhero{position:relative;background:var(--ink2);color:#fff;overflow:hidden}
+  .skhero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45}
+  .skhero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(21,17,15,.95) 0%,rgba(21,17,15,.6) 55%,rgba(21,17,15,.2) 100%)}
+  .skhero .wrap{position:relative;z-index:1;padding-top:70px;padding-bottom:64px}
+  .skhero .back{color:rgba(255,255,255,.8);font-weight:700;font-size:.9rem;display:inline-block;margin-bottom:22px}
+  .skhero .back:hover{color:#fff;text-decoration:underline}
+  .sklogo{font-family:var(--head);font-weight:900;font-size:clamp(2.6rem,8vw,5rem);letter-spacing:-.02em;line-height:.95}
+  .sklogo span{color:var(--sk)}
+  .skhero .by{font-weight:700;letter-spacing:.18em;font-size:.78rem;text-transform:uppercase;color:#f3c34c;margin-top:10px}
+  .skhero p.lead2{max-width:46ch;margin-top:18px;font-size:1.1rem;color:rgba(255,255,255,.9)}
+  .skhero .facts{display:flex;gap:26px;flex-wrap:wrap;margin-top:26px}
+  .skhero .facts div{font-size:.88rem;color:rgba(255,255,255,.75)}
+  .skhero .facts b{display:block;font-family:var(--head);font-size:1.35rem;color:#fff}
+  .skhero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .btn-sk{background:var(--sk);color:#fff}.btn-sk:hover{background:var(--sk-d)}
+
+  .sktabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+  .sktab{border:1.5px solid var(--line);background:#fff;padding:9px 16px;border-radius:999px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;color:var(--ink)}
+  .sktab:hover{border-color:var(--sk)}
+  .sktab[aria-pressed="true"]{background:var(--ink2);border-color:var(--ink2);color:#fff}
+  .sktab small{opacity:.6;font-weight:600;margin-left:4px}
+
+  .skgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:24px}
+  .skcard{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;text-align:left;padding:0;font-family:inherit;color:inherit;display:flex;flex-direction:column;transition:.18s}
+  .skcard:hover{border-color:var(--sk);box-shadow:0 12px 30px rgba(232,65,44,.12);transform:translateY(-3px)}
+  .skcard .pic{position:relative;aspect-ratio:1/1;background:#f3efe9}
+  .skcard .pic img{width:100%;height:100%;object-fit:cover}
+  .skcard .badges{position:absolute;top:10px;left:10px;display:flex;gap:6px}
+  .skb{font-size:.68rem;font-weight:800;letter-spacing:.06em;padding:4px 8px;border-radius:6px;text-transform:uppercase}
+  .skb.new{background:#f3c34c;color:#15110f}
+  .skb.out{background:#15110f;color:#fff}
+  .skcard.sold .pic img{filter:grayscale(.8);opacity:.6}
+  .skcard .bd{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column}
+  .skcard .cat{font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--sk)}
+  .skcard .nm{font-weight:700;font-size:1.02rem;line-height:1.3;margin-top:3px}
+  .skcard .ko{color:var(--mute);font-size:.86rem}
+  .skcard .row{display:flex;justify-content:space-between;align-items:baseline;margin-top:auto;padding-top:10px}
+  .skcard .pc{color:var(--mute);font-size:.85rem}
+  .skcard .pr{font-family:var(--head);font-weight:900;font-size:1.2rem}
+  .skempty{grid-column:1/-1;text-align:center;color:var(--mute);padding:40px 0}
+
+  .skdlg{border:0;padding:0;border-radius:20px;max-width:880px;width:calc(100% - 32px);max-height:calc(100vh - 32px)}
+  .skdlg::backdrop{background:rgba(21,17,15,.6)}
+  .skdlg .in{display:grid;grid-template-columns:1.1fr 1fr}
+  .skdlg .gal{background:#f3efe9;position:relative}
+  .skdlg .gal .main{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+  .skdlg .thumbs{display:flex;gap:8px;padding:10px}
+  .skdlg .thumbs button{border:2px solid transparent;border-radius:8px;padding:0;width:60px;height:60px;overflow:hidden;cursor:pointer;background:none}
+  .skdlg .thumbs button[aria-pressed="true"]{border-color:var(--sk)}
+  .skdlg .thumbs img{width:100%;height:100%;object-fit:cover}
+  .skdlg .info{padding:28px 28px 24px;overflow:auto}
+  .skdlg .x{position:absolute;top:12px;right:12px;width:38px;height:38px;border-radius:50%;border:0;background:#fff;font-size:1.2rem;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15);z-index:2}
+  .skdlg h2{font-family:'Fraunces',Georgia,serif;font-size:1.9rem;margin:4px 0 2px;letter-spacing:-.02em}
+  .skdlg .ko{color:var(--mute)}
+  .skdlg .price{font-family:var(--head);font-weight:900;font-size:1.6rem;margin:12px 0}
+  .skdlg dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:14px 0;font-size:.93rem}
+  .skdlg dt{font-weight:700;color:var(--mute)}
+  .skdlg .warn{background:#fff6e5;border:1px solid #f0d9a0;border-radius:10px;padding:10px 12px;font-size:.84rem;margin-top:12px}
+  .skdlg .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+  .skinfo{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+  .skinfo div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px}
+  .skinfo b{display:block;font-family:var(--head);font-size:1.1rem;margin:8px 0 4px}
+  .skinfo p{color:var(--mute);font-size:.94rem}
+  .skinfo .ic{font-size:1.8rem}
+  .sknote{color:var(--mute);font-size:.84rem;margin-top:22px;max-width:80ch}
+
+  @media(max-width:1000px){ .skgrid{grid-template-columns:repeat(3,1fr)} }
+  @media(max-width:760px){
+    .skgrid{grid-template-columns:1fr 1fr;gap:12px}
+    .skdlg .in{grid-template-columns:1fr}
+    .skinfo{grid-template-columns:1fr}
+    .skcard .bd{padding:11px 12px 13px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="../"><img src="../img/logo.png" alt="Kimchi Mart"><b>KIMCHI MART<span>SAFE · CLEAN · TRUSTED</span></b></a>
+    <nav class="menu" id="menu">
+      <a href="../#prepared">Today's Banchan</a>
+      <a href="./">Sushi King</a>
+      <a href="../#sale">Weekly Sale</a>
+      <a href="../#locations">Locations</a>
+      <a href="../#membership">Membership</a>
+      <a href="../blog/">Blog</a>
+    </nav>
+    <a class="shopbtn" href="https://kimchimartshop.com" target="_blank" rel="noopener">🛒 Shop Online</a>
+    <button class="burger" onclick="document.getElementById('menu').classList.toggle('open')" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<section class="skhero">
+  <img class="bg" src="../img/food/km-sushi-case.jpg" alt="">
+  <div class="wrap">
+    <a class="back" href="../">← Kimchi Mart home</a>
+    <div class="sklogo">SUSHI <span>KING</span></div>
+    <div class="by">Quality by Chef Choi · Kimchi Mart</div>
+    <p class="lead2">Rolls, nigiri, sashimi platters and poke bowls — made fresh every morning in all five Kimchi Mart stores.</p>
+    <div class="facts">
+      <div><b>Every morning</b>made fresh in-store</div>
+      <div><b>5 stores</b>Miami to Fort Lauderdale</div>
+      <div><b id="skCount">—</b>items on the menu</div>
+    </div>
+    <div class="cta">
+      <a class="btn btn-sk" href="#menu-list">See the menu ↓</a>
+      <a class="btn btn-o" href="../#locations">📍 Find a store</a>
+    </div>
+  </div>
+</section>
+
+<section class="sect" id="menu-list">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--sk)">The Menu</p>
+    <h2>Fresh from our sushi counter</h2>
+    <p class="lead">Tap any item for photos, ingredients and allergens. Selection varies by store and time of day.</p>
+    <div class="sktabs" id="skTabs" role="group" aria-label="Category"></div>
+    <div class="skgrid" id="skGrid" aria-live="polite"></div>
+
+    <div class="skinfo">
+      <div><span class="ic">🌅</span><b>Rolled every morning</b><p>Our sushi team prepares every tray fresh each day — never yesterday's.</p></div>
+      <div><span class="ic">🎉</span><b>Party platters</b><p>Feeding a group? Ask at the sushi counter about platters for your next party or meeting.</p></div>
+      <div><span class="ic">🏷️</span><b>Clear labels</b><p>Every package lists ingredients and the date it was made. Ask our team if you have questions.</p></div>
+    </div>
+    <p class="sknote"><b>Consumer advisory:</b> Consuming raw or undercooked meats, poultry, seafood, shellfish or eggs may increase your risk of foodborne illness. Allergen information is provided for convenience — always check the package label, as products are prepared in a kitchen that handles fish, shellfish, soy, wheat, sesame, eggs and milk.</p>
+  </div>
+</section>
+
+<dialog class="skdlg" id="skDlg"><div class="in" id="skDlgIn"></div></dialog>
+
+<footer>
+  <div class="wrap">
+    <div class="fbot" style="border:0;margin-top:0;padding-top:0">
+      <span>© 2026 Kimchi Mart · SUSHI KING</span>
+      <span><a href="../">miamikimchi.com</a> · Open every day 8AM–10PM</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ═══ SUSHI KING 제품 — 구글 시트 "4. 스시킹 제품 (sushiking)" 에서 읽어옴 ═══ */
+var SK_SHEET = '1zugq5tWEPt7srSIfsy0OMZ7xlfABihEx5r9vLVuJ0O0';
+var STORE_NAMES = { miami: 'Miami', pembroke: 'Pembroke Pines', hollywood: 'Hollywood', coral: 'Coral Springs', ftl: 'Fort Lauderdale' };
+var CAT_ORDER = ['Roll', 'Nigiri', 'Sashimi', 'Platter', 'Poke', 'Bowl', 'Other'];
+// 시트를 못 읽을 때 기본값
+var SK = [
+  { sku: 'SK-001', cat: 'Roll', en: 'Philadelphia Roll', ko: '필라델피아 롤', pcs: '8 pcs', desc: 'Fresh salmon, cream cheese and cucumber.', allergens: 'Fish, Milk', raw: true, photos: ['../img/food/km-sushi-case.jpg'] },
+  { sku: 'SK-002', cat: 'Poke', en: 'Poke Bowl', ko: '포케 볼', pcs: '1 bowl', desc: 'Tuna, salmon, eel and mango over rice.', allergens: 'Fish, Soy, Sesame', raw: true, isNew: true, photos: ['../img/food/km-poke-bowl.jpg'] },
+  { sku: 'SK-003', cat: 'Platter', en: 'Sashimi Platter', ko: '모둠 회', desc: 'Salmon, tuna and assorted sashimi.', allergens: 'Fish', raw: true, photos: ['../img/food/km-sashimi-platter.jpg'] },
+  { sku: 'SK-004', cat: 'Platter', en: 'Chirashi Tray', ko: '회덮밥 트레이', desc: 'Assorted fish and vegetables over sushi rice.', allergens: 'Fish, Soy, Sesame', raw: true, photos: ['../img/food/km-chirashi-tray.jpg'] }
+];
+
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var yes = function (v) { return /^(y|yes|o|ok|true|1|✓|✔|승인)$/i.test(String(v || '').trim()); };
+  function photo(u) {
+    u = String(u || '').trim(); if (!u) return '';
+    var m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=|thumbnail\?id=)([\w-]{20,})/);
+    if (m) return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1200';
+    if (/^\.\/img\//.test(u)) return '.' + u;      // 홈 기준 ./img → 이 페이지 기준 ../img
+    if (/^img\//.test(u)) return '../' + u;
+    return u;
+  }
+  function money(v) { var s = String(v || '').trim(); if (!s) return ''; var n = parseFloat(s.replace(/[^0-9.]/g, '')); return isNaN(n) ? s : '$' + n.toFixed(2); }
+  function soldOut(st) { return /품절|sold|out/i.test(String(st || '')); }
+  function parseCSV(text) {
+    var rows = [], row = [], f = '', q = false;
+    for (var i = 0; i < text.length; i++) {
+      var c = text[i];
+      if (q) { if (c === '"') { if (text[i + 1] === '"') { f += '"'; i++; } else q = false; } else f += c; }
+      else if (c === '"') q = true; else if (c === ',') { row.push(f); f = ''; }
+      else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i++; row.push(f); rows.push(row); row = []; f = ''; }
+      else f += c;
+    }
+    if (f !== '' || row.length) { row.push(f); rows.push(row); }
+    var head = (rows.shift() || []).map(function (h) { return h.trim().toLowerCase(); });
+    if (head.length && !head[0]) head[0] = 'approved';
+    return rows.filter(function (r) { return r.some(function (v) { return v.trim(); }); }).map(function (r) { var o = {}; head.forEach(function (h, k) { o[h] = (r[k] || '').trim(); }); return o; });
+  }
+  function fromSheet(rows) {
+    return rows.filter(function (r) { return yes(r.approved) && r.name_en && r.photo_main; }).map(function (r) {
+      var c = (r.category || 'Other').trim(); c = c.charAt(0).toUpperCase() + c.slice(1).toLowerCase();
+      return { sku: r.sku, cat: c, en: r.name_en, ko: r.name_ko, pcs: r.pieces, price: r.price, desc: r.description, ingr: r.ingredients, allergens: r.allergens, raw: yes(r.raw_fish), stores: r.stores, status: r.status, isNew: yes(r['new']),
+        photos: [r.photo_main, r.photo_open, r.photo_label].map(photo).filter(Boolean) };
+    });
+  }
+
+  var cat = 'All', tabs = $('#skTabs'), grid = $('#skGrid'), dlg = $('#skDlg'), dlgIn = $('#skDlgIn');
+  function storesTxt(s) {
+    s = String(s || 'all').toLowerCase();
+    if (!s || s === 'all') return 'All 5 stores';
+    return s.split(/[,\/·]+/).map(function (x) { x = x.trim(); return STORE_NAMES[x] || x; }).filter(Boolean).join(', ');
+  }
+  function render() {
+    var cats = ['All'].concat(CAT_ORDER.filter(function (c) { return SK.some(function (p) { return p.cat === c; }); }),
+      SK.map(function (p) { return p.cat; }).filter(function (c, i, a) { return CAT_ORDER.indexOf(c) < 0 && a.indexOf(c) === i; }));
+    if (cats.indexOf(cat) < 0) cat = 'All';
+    tabs.innerHTML = cats.map(function (c) { var n = c === 'All' ? SK.length : SK.filter(function (p) { return p.cat === c; }).length;
+      return '<button type="button" class="sktab" data-c="' + esc(c) + '" aria-pressed="' + (c === cat) + '">' + esc(c === 'All' ? 'All' : c) + '<small>' + n + '</small></button>'; }).join('');
+    var list = SK.filter(function (p) { return cat === 'All' || p.cat === cat; });
+    grid.innerHTML = list.length ? list.map(function (p) {
+      var i = SK.indexOf(p), out = soldOut(p.status);
+      return '<button type="button" class="skcard' + (out ? ' sold' : '') + '" data-i="' + i + '">' +
+        '<div class="pic"><img src="' + esc(p.photos[0]) + '" alt="' + esc(p.en) + '" loading="lazy"><div class="badges">' +
+        (p.isNew ? '<span class="skb new">New</span>' : '') + (out ? '<span class="skb out">Sold out today</span>' : '') + '</div></div>' +
+        '<div class="bd"><div class="cat">' + esc(p.cat) + '</div><div class="nm">' + esc(p.en) + '</div><div class="ko">' + esc(p.ko) + '</div>' +
+        '<div class="row"><span class="pc">' + esc(p.pcs) + '</span><span class="pr">' + esc(money(p.price)) + '</span></div></div></button>';
+    }).join('') : '<p class="skempty">New items coming soon.</p>';
+    $('#skCount').textContent = SK.length;
+  }
+  function open(i) {
+    var p = SK[i]; if (!p) return;
+    var thumbs = p.photos.length > 1 ? '<div class="thumbs">' + p.photos.map(function (u, k) { return '<button type="button" data-k="' + k + '" aria-pressed="' + (k === 0) + '"><img src="' + esc(u) + '" alt=""></button>'; }).join('') + '</div>' : '';
+    var rows = [['Size', p.pcs], ['Ingredients', p.ingr], ['Allergens', p.allergens], ['Available at', storesTxt(p.stores)], ['Item #', p.sku]]
+      .filter(function (r) { return r[1]; }).map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd>'; }).join('');
+    dlgIn.innerHTML = '<button type="button" class="x" aria-label="Close">✕</button>' +
+      '<div class="gal"><img class="main" src="' + esc(p.photos[0]) + '" alt="' + esc(p.en) + '">' + thumbs + '</div>' +
+      '<div class="info"><div class="cat" style="color:var(--sk);font-weight:800;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase">' + esc(p.cat) + (soldOut(p.status) ? ' · Sold out today' : '') + '</div>' +
+      '<h2>' + esc(p.en) + '</h2><div class="ko">' + esc(p.ko) + '</div>' +
+      (p.price ? '<div class="price">' + esc(money(p.price)) + '</div>' : '') +
+      (p.desc ? '<p>' + esc(p.desc) + '</p>' : '') + (rows ? '<dl>' + rows + '</dl>' : '') +
+      (p.raw ? '<div class="warn">⚠️ Contains raw fish. Consuming raw or undercooked seafood may increase your risk of foodborne illness.</div>' : '') +
+      '<div class="acts"><a class="btn btn-sk" href="../#locations">📍 Find a store</a><a class="btn btn-g" href="https://kimchimartshop.com" target="_blank" rel="noopener">🛒 Shop online</a></div></div>';
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+  }
+  tabs.addEventListener('click', function (e) { var b = e.target.closest('.sktab'); if (b) { cat = b.dataset.c; render(); } });
+  grid.addEventListener('click', function (e) { var b = e.target.closest('.skcard'); if (b) open(+b.dataset.i); });
+  dlg.addEventListener('click', function (e) {
+    if (e.target === dlg || e.target.closest('.x')) { dlg.close(); return; }
+    var t = e.target.closest('.thumbs button'); if (!t) return;
+    dlgIn.querySelector('.main').src = t.querySelector('img').src;
+    [].forEach.call(t.parentNode.children, function (x) { x.setAttribute('aria-pressed', x === t ? 'true' : 'false'); });
+  });
+
+  var CK = 'km_sushiking_v1';
+  try { var c = JSON.parse(localStorage.getItem(CK) || 'null'); if (c && c.length) SK = c; } catch (e) {}
+  render();
+  fetch('https://docs.google.com/spreadsheets/d/' + SK_SHEET + '/export?format=csv&t=' + Date.now())
+    .then(function (r) { if (!r.ok) throw 0; return r.text(); })
+    .then(function (t) { if (/^\s*</.test(t)) throw 0; var list = fromSheet(parseCSV(t)); if (!list.length) return;
+      SK = list; try { localStorage.setItem(CK, JSON.stringify(list)); } catch (e) {} render(); })
+    .catch(function () {});
+
+  document.querySelectorAll('#menu a').forEach(function (a) { a.addEventListener('click', function () { $('#menu').classList.remove('open'); }); });
+})();
+</script>
+</body>
+</html>
