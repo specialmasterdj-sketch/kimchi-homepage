@@ -295,3 +295,7 @@
 .kcard h3{font-size:clamp(1.5rem,2.2vw,1.85rem)}
 .kbadge{position:absolute;top:14px;left:14px;z-index:1;background:#d9e88a;color:#16211b;font-weight:800;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px}
 @media(max-width:900px){ .kcard{flex:0 0 70%} }
+
+/* 메뉴 항목이 늘어나서 (Our Kitchen 추가) */
+@media(max-width:1360px) and (min-width:901px){ .logo b{display:none} .menu{gap:14px;font-size:.86rem} }
+

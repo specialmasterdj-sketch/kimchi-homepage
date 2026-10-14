@@ -16,6 +16,8 @@
 <link rel="stylesheet" href="../assets/site.css">
 <style>
   :root{ --sk:#e8412c; --sk-d:#b92d1c; --ink2:#15110f; }
+  .menu{gap:18px} .menu a{white-space:nowrap}
+  @media(max-width:1360px) and (min-width:901px){ .logo b{display:none} .menu{gap:14px;font-size:.86rem} }
   .skhero{position:relative;background:var(--ink2);color:#fff;overflow:hidden}
   .skhero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.45}
   .skhero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(21,17,15,.95) 0%,rgba(21,17,15,.6) 55%,rgba(21,17,15,.2) 100%)}
@@ -99,6 +101,7 @@
     <a class="logo" href="../"><img src="../img/logo.png" alt="Kimchi Mart"><b>KIMCHI MART<span>SAFE · CLEAN · TRUSTED</span></b></a>
     <nav class="menu" id="menu">
       <a href="../#prepared">Today's Banchan</a>
+      <a href="../kitchen/">Our Kitchen</a>
       <a href="./">Sushi King</a>
       <a href="../#sale">Weekly Sale</a>
       <a href="../#locations">Locations</a>
