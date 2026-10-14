@@ -393,11 +393,19 @@ var KM = {
   }).join('');
   var yr = $('#ytRow');
   if (yr) {
-    yr.innerHTML = KM.videos.map(function (v) {
-      return '<button type="button" class="yt rv" data-id="' + v.id + '" aria-label="Play: ' + v.title + '">' +
-        '<img src="https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg" alt="" loading="lazy">' +
-        '<span class="play">▶</span><span class="yt-t">' + v.title + '</span></button>';
-    }).join('');
+    var renderVideos = function (list) {
+      yr.innerHTML = list.map(function (v) {
+        return '<button type="button" class="yt" data-id="' + esc(v.id) + '" aria-label="Play: ' + esc(v.title) + '">' +
+          '<img src="https://i.ytimg.com/vi/' + esc(v.id) + '/hqdefault.jpg" alt="" loading="lazy">' +
+          '<span class="play">▶</span><span class="yt-t">' + esc(v.title) + '</span></button>';
+      }).join('');
+    };
+    renderVideos(KM.videos);
+    // 최신 영상 목록 — GitHub Actions 가 4시간마다 YouTube 채널에서 갱신 (assets/videos.json)
+    fetch('./assets/videos.json?t=' + Math.floor(Date.now() / 6e5))
+      .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(function (list) { if (Array.isArray(list) && list.length) renderVideos(list.slice(0, 4)); })
+      .catch(function () {});
     yr.addEventListener('click', function (e) {
       var b = e.target.closest('.yt'); if (!b || b.classList.contains('on')) return;
       b.classList.add('on');

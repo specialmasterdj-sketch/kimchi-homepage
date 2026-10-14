@@ -299,3 +299,7 @@
 /* 메뉴 항목이 늘어나서 (Our Kitchen 추가) */
 @media(max-width:1360px) and (min-width:901px){ .logo b{display:none} .menu{gap:14px;font-size:.86rem} }
 
+
+/* 영상 제목이 길면 3줄까지만 */
+.yt .yt-t{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
