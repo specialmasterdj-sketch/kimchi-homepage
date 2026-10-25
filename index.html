@@ -39,7 +39,7 @@
       <a href="#prepared">Today's Banchan</a>
       <a href="./kitchen/">Our Kitchen</a>
       <a href="./sushi-king/">Sushi King</a>
-      <a href="#sale">Weekly Sale</a>
+      <a href="#sale" style="display:none">Weekly Sale</a>
       <a href="#pickup">1-Hour Pickup</a>
       <a href="#locations">Locations</a>
       <a href="#membership">Membership</a>
@@ -65,7 +65,8 @@
   <span class="dish" id="heroDish"></span>
 </section>
 
-<div class="ticker" aria-label="Today only deals">
+<!-- Sale prices hidden temporarily (2026-10-24): prices not accurate. Remove style="display:none" to restore. -->
+<div class="ticker" aria-label="Today only deals" style="display:none">
   <span class="lbl">🔥 TODAY ONLY</span>
   <div class="track" id="tickerTrack"></div>
 </div>
@@ -117,7 +118,7 @@
   </div>
 </section>
 
-<section class="sect" id="sale">
+<section class="sect" id="sale" style="display:none">
   <div class="wrap">
     <div class="shead salehead">
       <div>

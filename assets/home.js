@@ -126,7 +126,15 @@ var KM = {
 
   /* 오늘만 티커 + 세일 카드 */
   var tk = $('#tickerTrack'), pg = $('#saleGrid');
+  // 세일 가격 임시 숨김 (2026-10-24, 가격 부정확) — false 로 바꾸면 다시 보임
+  var SALE_HIDDEN = true;
   function renderSale() {
+    if (SALE_HIDDEN) {
+      show(tk && tk.closest('.ticker'), false);
+      show($('#sale'), false);
+      show(document.querySelector('#menu a[href="#sale"]'), false);
+      return;
+    }
     var list = KM.sale;
     var todays = list.filter(function (x) { return x.today; });
     show(tk && tk.closest('.ticker'), todays.length > 0);

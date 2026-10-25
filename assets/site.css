@@ -194,3 +194,6 @@
 @media(max-width:900px){ .mapbox iframe{height:300px} .storehead .cta .btn{width:100%;justify-content:center} }
 
 .maplink{font-weight:700;color:var(--green);text-decoration:underline;text-underline-offset:3px}
+
+/* 세일 가격 임시 숨김 (2026-10-24) — 이 줄을 지우면 메뉴의 Weekly Sale 링크가 다시 보임 */
+.menu a[href$="#sale"]{display:none!important}
